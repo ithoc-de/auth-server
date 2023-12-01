@@ -1,8 +1,8 @@
-package de.ithoc.authorization.services;
+package de.ithoc.auth.services;
 
-import de.ithoc.authorization.model.BearerToken;
-import de.ithoc.authorization.model.GrantType;
-import de.ithoc.authorization.persistance.*;
+import de.ithoc.auth.model.BearerToken;
+import de.ithoc.auth.model.GrantType;
+import de.ithoc.auth.persistance.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

@@ -1,4 +1,4 @@
-package de.ithoc.authorization.config;
+package de.ithoc.auth.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package de.ithoc.authorization.api;
+package de.ithoc.auth.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package de.ithoc.authorization;
+package de.ithoc.auth;
 
-import de.ithoc.authorization.persistance.*;
+import de.ithoc.auth.persistance.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

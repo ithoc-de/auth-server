@@ -1,4 +1,4 @@
-package de.ithoc.authorization.persistance;
+package de.ithoc.auth.persistance;
 
 import jakarta.persistence.*;
 import lombok.Getter;

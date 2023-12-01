@@ -1,4 +1,4 @@
-package de.ithoc.authorization.model;
+package de.ithoc.auth.model;
 
 public enum GrantType {
 

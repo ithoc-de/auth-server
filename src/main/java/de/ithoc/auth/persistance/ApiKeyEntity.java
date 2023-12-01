@@ -1,25 +1,21 @@
-package de.ithoc.authorization.persistance;
+package de.ithoc.auth.persistance;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Entity(name = "token")
-public class TokenEntity {
+@Entity(name = "api_key")
+public class ApiKeyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String accessToken;
-    private String tokenType;
-    private LocalDateTime createdAt;
-    private Integer expiresIn;
+    private UUID apiKey;
 
     @OneToOne
     private ClientEntity client;

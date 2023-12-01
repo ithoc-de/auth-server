@@ -1,6 +1,6 @@
-package de.ithoc.authorization.api;
+package de.ithoc.auth.api;
 
-import de.ithoc.authorization.services.AuthService;
+import de.ithoc.auth.services.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
