@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +23,6 @@ public class ClientEntity {
     private String clientSecret;
 
     @ManyToMany
-    private List<AudienceEntity> audiences;
+    private List<AudienceEntity> audiences = new ArrayList<>();
 
 }

@@ -31,21 +31,26 @@ public class AuthorizationServerApplication {
     @PostConstruct
     public void init() {
 
-        for (int i = 0; i < 3; i++) {
-            AudienceEntity audienceEntity = new AudienceEntity();
-            audienceEntity.setAudienceId("api-" + i);
-            audienceRepository.save(audienceEntity);
+        // Web Blog REST API Java
+        AudienceEntity audienceEntity = new AudienceEntity();
+        audienceEntity.setAudienceId("web-blog-rest-api-java");
+        audienceRepository.save(audienceEntity);
 
-        }
+        createClient("team-1", "SlVg0iGOhEXkOOZwlvw6", audienceEntity);
+        createClient("team-2", "SlVg0iGOhEXkOOZwlvw6", audienceEntity);
+        createClient("team-3", "SlVg0iGOhEXkOOZwlvw6", audienceEntity);
+        createClient("team-4", "SlVg0iGOhEXkOOZwlvw6", audienceEntity);
+    }
 
-        for (int j = 0; j < 3; j++) {
-            ClientEntity clientEntity = new ClientEntity();
-            clientEntity.setClientId("client-" + j);
-            clientEntity.setClientSecret(BCrypt.hashpw("secret-" + j, bcryptSalt));
-            clientRepository.save(clientEntity);
-            clientEntity.setAudiences(audienceRepository.findAll());
-            clientRepository.save(clientEntity);
-        }
+    private void createClient(String clientId,
+                              @SuppressWarnings("SameParameterValue") String clientSecret,
+                              AudienceEntity audienceEntity) {
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setClientId(clientId);
+        clientEntity.setClientSecret(BCrypt.hashpw(clientSecret, bcryptSalt));
+        clientRepository.save(clientEntity);
+        clientEntity.getAudiences().add(audienceEntity);
+        clientRepository.save(clientEntity);
     }
 
 }
