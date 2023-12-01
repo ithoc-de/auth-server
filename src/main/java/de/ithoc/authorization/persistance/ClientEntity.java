@@ -21,7 +21,7 @@ public class ClientEntity {
     private String clientId;
     private String clientSecret;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<AudienceEntity> audiences;
 
 }
