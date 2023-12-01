@@ -1,5 +1,9 @@
 # OAuth 2.0 Authorization Server
 
+## API Documentation
+http://localhost:18081/swagger-ui/index.html#/
+
+## Code Flow
 1. Client Credentials Flow: 
 https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow
 

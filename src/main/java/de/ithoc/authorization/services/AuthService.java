@@ -40,6 +40,11 @@ public class AuthService {
         this.tokenRepository = tokenRepository;
     }
 
+    public Boolean validation(String token) {
+
+        return tokenRepository.findByAccessToken(token).isPresent();
+    }
+
     public BearerToken bearerToken(GrantType grantType, String clientId, String clientSecret, String audience) {
 
         String token = null;
