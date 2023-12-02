@@ -1,32 +1,58 @@
 package de.ithoc.auth.api;
 
-import de.ithoc.auth.services.AuthService;
+import de.ithoc.auth.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 public class ValidationRestController {
 
-    private final AuthService authService;
+    private final AuthenticationService authenticationService;
 
-    public ValidationRestController(AuthService authService) {
-        this.authService = authService;
+    public ValidationRestController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping(value = "/validation")
-    public ResponseEntity<Void> validation(@RequestBody ValidationBody validationBody) {
+    public ResponseEntity<ValidationResponseBody> validation(
+            @RequestHeader("x-api-key") String apiKey,
+            @RequestBody ValidationBody validationBody) {
         log.trace("validation called");
 
-        Boolean valid = authService.validation(validationBody.getAccessToken());
-        if(!valid) {
-            return ResponseEntity.status(401).build();
+        /*
+         * First, check if the API key is valid, meaning the client is registered and
+         * has permission to validate tokens at all.
+         */
+        if(!authenticationService.validateApiKey(apiKey)) {
+            ValidationResponseBody validationResponseBody =
+                    getValidationResponseBody(false, 1, "API key is invalid");
+            return ResponseEntity.status(401).body(validationResponseBody);
         }
 
-        return ResponseEntity.ok().build();
+        /*
+         * Second, check if the token is valid, meaning the client is registered and
+         * has access to the API.
+         */
+        if(!authenticationService.validateToken(validationBody.getAccessToken())) {
+            ValidationResponseBody validationResponseBody =
+                    getValidationResponseBody(false, 2, "Token is invalid");
+            return ResponseEntity.status(401).body(validationResponseBody);
+        }
+
+        return ResponseEntity.ok(getValidationResponseBody(true, 0, "Request valid"));
+    }
+
+    private static ValidationResponseBody getValidationResponseBody(boolean valid, int code, String message) {
+        ValidationResponseBody validationResponseBody = new ValidationResponseBody();
+        validationResponseBody.setValid(valid);
+        validationResponseBody.setCode(code);
+        validationResponseBody.setMessage(message);
+        return validationResponseBody;
     }
 
 }

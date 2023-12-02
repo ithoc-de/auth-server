@@ -2,7 +2,7 @@ package de.ithoc.auth.api;
 
 import de.ithoc.auth.model.BearerToken;
 import de.ithoc.auth.model.GrantType;
-import de.ithoc.auth.services.AuthService;
+import de.ithoc.auth.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationRestController {
 
-    private final AuthService authService;
+    private final AuthenticationService authenticationService;
 
-    public AuthenticationRestController(AuthService authService) {
-        this.authService = authService;
+    public AuthenticationRestController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping(value = "/token")
@@ -24,7 +24,7 @@ public class AuthenticationRestController {
         log.trace("token called");
 
         GrantType grantType = GrantType.valueOf(tokenBody.getGrantType().toUpperCase());
-        BearerToken bearerToken = authService.bearerToken(
+        BearerToken bearerToken = authenticationService.bearerToken(
                 grantType,
                 tokenBody.getClientId(),
                 tokenBody.getClientSecret(),

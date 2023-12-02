@@ -15,10 +15,11 @@ import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @Service
-public class AuthService {
+public class AuthenticationService {
 
     @Value("${authorization.server.jwt.issuer}")
     private String jwtIssuer;
@@ -34,13 +35,22 @@ public class AuthService {
 
     private final ClientRepository clientRepository;
     private final TokenRepository tokenRepository;
+    private final ApiKeyRepository apiKeyRepository;
 
-    public AuthService(ClientRepository clientRepository, TokenRepository tokenRepository) {
+    public AuthenticationService(ClientRepository clientRepository,
+                                 TokenRepository tokenRepository,
+                                 ApiKeyRepository apiKeyRepository) {
         this.clientRepository = clientRepository;
         this.tokenRepository = tokenRepository;
+        this.apiKeyRepository = apiKeyRepository;
     }
 
-    public Boolean validation(String token) {
+    public Boolean validateApiKey(String apiKey) {
+
+        return apiKeyRepository.findByApiKey(UUID.fromString(apiKey)).isPresent();
+    }
+
+    public Boolean validateToken(String token) {
 
         return tokenRepository.findByAccessToken(token).isPresent();
     }
