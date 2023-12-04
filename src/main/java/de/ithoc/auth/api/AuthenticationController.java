@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-public class AuthenticationRestController {
+public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationRestController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
@@ -24,7 +24,7 @@ public class AuthenticationRestController {
         log.trace("token called");
 
         GrantType grantType = GrantType.valueOf(tokenBody.getGrantType().toUpperCase());
-        BearerToken bearerToken = authenticationService.bearerToken(
+        BearerToken bearerToken = authenticationService.fetchToken(
                 grantType,
                 tokenBody.getClientId(),
                 tokenBody.getClientSecret(),

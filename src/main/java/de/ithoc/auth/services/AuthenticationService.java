@@ -55,7 +55,7 @@ public class AuthenticationService {
         return tokenRepository.findByAccessToken(token).isPresent();
     }
 
-    public BearerToken bearerToken(GrantType grantType, String clientId, String clientSecret, String audience) {
+    public BearerToken fetchToken(GrantType grantType, String clientId, String clientSecret, String audience) {
 
         String token = null;
         if (grantType == GrantType.CLIENT_CREDENTIALS) {
@@ -79,7 +79,7 @@ public class AuthenticationService {
                                     String jwt = generateJwt(clientId, expiration);
 
                                     // Create the token on database
-                                    createToken(clientEntity, audienceEntity, jwt, now);
+                                    fetchToken(clientEntity, audienceEntity, jwt, now);
                                     return jwt;
 
                                 }).orElse(null);
@@ -97,10 +97,10 @@ public class AuthenticationService {
         return bearerToken;
     }
 
-    private void createToken(ClientEntity clientEntity,
-                             AudienceEntity audienceEntity,
-                             String jwt,
-                             LocalDateTime createdAt) {
+    private void fetchToken(ClientEntity clientEntity,
+                            AudienceEntity audienceEntity,
+                            String jwt,
+                            LocalDateTime createdAt) {
 
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setClient(clientEntity);

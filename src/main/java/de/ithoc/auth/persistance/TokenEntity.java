@@ -21,10 +21,10 @@ public class TokenEntity {
     private LocalDateTime createdAt;
     private Integer expiresIn;
 
-    @OneToOne
+    @ManyToOne
     private ClientEntity client;
 
-    @OneToOne
+    @ManyToOne
     private AudienceEntity audience;
 
 }

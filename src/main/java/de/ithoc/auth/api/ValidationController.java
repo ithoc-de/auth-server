@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-public class ValidationRestController {
+public class ValidationController {
 
     private final AuthenticationService authenticationService;
 
-    public ValidationRestController(AuthenticationService authenticationService) {
+    public ValidationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
