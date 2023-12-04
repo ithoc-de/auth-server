@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This controller is used to validate tokens. CORS policy needs to stay enabled,
+ * as it will only be called from resource servers, so backend to backend.
+ */
 @Slf4j
 @RestController
 public class ValidationController {
