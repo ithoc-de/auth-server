@@ -3,6 +3,7 @@ services:
   auth-server-db:
     image: postgres:16
     container_name: auth-server-db
+    restart: always
     ports:
       - "5435:5432"
     environment:
@@ -17,6 +18,7 @@ services:
     build: .
     image: olihock/auth-server-backend
     container_name: auth-server-backend
+    restart: always
     env_file:
       - .env
     ports:
