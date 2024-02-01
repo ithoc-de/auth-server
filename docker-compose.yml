@@ -1,0 +1,31 @@
+version: '3.4'
+services:
+  auth-server-db:
+    image: postgres:16
+    container_name: auth-server-db
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: auth-server-db
+    volumes:
+      - ~/ws/auth-server-db-volume:/var/lib/postgresql/data
+    networks:
+      - auth-server-network
+  auth-server-backend:
+    build: .
+    image: olihock/auth-server-backend
+    container_name: auth-server-backend
+    env_file:
+      - .env
+    ports:
+      - "18081:18081"
+    volumes:
+      - "${HOME}/.m2:/root/.m2"
+    depends_on:
+      - auth-server-db
+    networks:
+      - auth-server-network
+networks:
+  auth-server-network:
