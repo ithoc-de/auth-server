@@ -55,17 +55,17 @@ public class ConsumerService {
      * Generates and stores an API key.
      *
      * @param clientId ID of the client
-     * @param username Username of the user
+     * @param user Username of the user
      * @throws NoSuchElementException   If client or audience does not exist
      * @throws IllegalArgumentException If client secret is wrong
      */
-    public void generate(String realm, String clientId, String username)
+    public void generate(String realm, String clientId, String user)
             throws NoSuchElementException, IllegalArgumentException {
 
         ConsumerEntity consumerEntity = new ConsumerEntity();
         consumerEntity.setRealm(realm);
         consumerEntity.setClientId(clientId);
-        consumerEntity.setUsername(username);
+        consumerEntity.setUsername(user);
 
         // Generate API key that is a UUID for now.
         String apiKey = UUID.randomUUID().toString();

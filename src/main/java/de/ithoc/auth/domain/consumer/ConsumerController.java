@@ -19,35 +19,35 @@ public class ConsumerController {
     }
 
     @PostMapping("/fetch")
-    public ResponseEntity<ConsumerResponseBody> fetch(@RequestBody ConsumerRequestBody consumerRequestBody) {
-        log.trace(consumerRequestBody.toString());
+    public ResponseEntity<ConsumerFetchResponseBody> fetch(@RequestBody ConsumerFetchRequestBody consumerFetchRequestBody) {
+        log.trace(consumerFetchRequestBody.toString());
 
         // TODO Check if client secret matches.
         // TODO Check if password matches.
 
         String apiKey = consumerService.read(
-                consumerRequestBody.getRealm(),
-                consumerRequestBody.getClientId(),
-                consumerRequestBody.getUsername()
+                consumerFetchRequestBody.getRealm(),
+                consumerFetchRequestBody.getClientId(),
+                consumerFetchRequestBody.getUsername()
         );
 
-        ConsumerResponseBody consumerResponseBody = new ConsumerResponseBody();
-        consumerResponseBody.setApiKey(apiKey);
+        ConsumerFetchResponseBody consumerFetchResponseBody = new ConsumerFetchResponseBody();
+        consumerFetchResponseBody.setApiKey(apiKey);
 
-        return ResponseEntity.ok(consumerResponseBody);
+        return ResponseEntity.ok(consumerFetchResponseBody);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> create(@RequestBody ConsumerRequestBody consumerRequestBody) {
-        log.trace(consumerRequestBody.toString());
+    public ResponseEntity<Void> create(@RequestBody ConsumerCreateRequestBody consumerCreateRequestBody) {
+        log.trace(consumerCreateRequestBody.toString());
 
-        // TODO Check if client secret matches.
+        // TODO Check if the user is an admin.
         // TODO Check if password matches.
 
         consumerService.generate(
-                consumerRequestBody.getRealm(),
-                consumerRequestBody.getClientId(),
-                consumerRequestBody.getUsername()
+                consumerCreateRequestBody.getRealm(),
+                consumerCreateRequestBody.getClientId(),
+                consumerCreateRequestBody.getUser()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

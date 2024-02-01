@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ConsumerResponseBody {
+public class ConsumerFetchResponseBody {
 
     private String apiKey;
 
