@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Auth Server API
+  version: 1.0.0
+servers:
+  - url: https://integ.dynv6.net/auth-server/api/users
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequestBody'
+      responses:
+        '201':
+          description: User created
+  /users/{username}:
+    get:
+      operationId: getUserByUsername
+      summary: Get a user by username.
+      parameters:
+        - name: username
+          in: path
+          description: User username.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseBody'
+        '404':
+          description: User not found.
+components:
+  schemas:
+    UserRequestBody:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    UserResponseBody:
+      type: object
+      properties:
+        username:
+          type: string

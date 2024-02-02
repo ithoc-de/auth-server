@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Auth Server API
+  version: 1.0.0
+servers:
+  - url: https://integ.dynv6.net/auth-server/api
+paths:
+  /profiles:
+    post:
+      operationId: createProfile
+      summary: Create a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+      responses:
+        '201':
+          description: Profile created
+  /profiles/{username}:
+    get:
+      operationId: getProfilesByUsername
+      summary: Get profiles by username.
+      parameters:
+        - name: username
+          in: path
+          description: User username.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The profile for the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+        email :
+          type: string
+        username:
+          type: string
