@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Auth Server API
+  version: 1.0.0
+servers:
+  - url: https://integ.dynv6.net/auth-server/api/users
+paths:
+  /login:
+    post:
+      operationId: login
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestBody'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseBody'
+        '401':
+          description: Unauthorized user
+components:
+  schemas:
+    LoginRequestBody:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        admin:
+          type: boolean
+    LoginResponseBody:
+      type: object
+      properties:
+        success:
+          type: boolean
