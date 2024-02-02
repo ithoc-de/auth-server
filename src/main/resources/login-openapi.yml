@@ -33,6 +33,8 @@ components:
           type: string
         password:
           type: string
+        admin:
+          type: boolean
     LoginResponseBody:
       type: object
       properties:

@@ -1,5 +1,7 @@
 package de.ithoc.auth.domain.consumer;
 
+import de.ithoc.auth.domain.login.LoginService;
+import de.ithoc.auth.domain.user.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +15,22 @@ import org.springframework.web.bind.annotation.*;
 public class ConsumerController {
 
     private final ConsumerService consumerService;
+    private final LoginService loginService;
 
-    public ConsumerController(ConsumerService consumerService) {
+    public ConsumerController(ConsumerService consumerService, LoginService loginService) {
         this.consumerService = consumerService;
+        this.loginService = loginService;
     }
 
     @PostMapping("/fetch")
     public ResponseEntity<ConsumerFetchResponseBody> fetch(@RequestBody ConsumerFetchRequestBody consumerFetchRequestBody) {
         log.trace(consumerFetchRequestBody.toString());
 
-        // TODO Check if client secret matches.
-        // TODO Check if password matches.
+        UserDto userDto = loginService.login(
+                consumerFetchRequestBody.getUsername(), consumerFetchRequestBody.getPassword());
+        if(userDto == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
         String apiKey = consumerService.read(
                 consumerFetchRequestBody.getRealm(),
@@ -41,8 +48,11 @@ public class ConsumerController {
     public ResponseEntity<Void> create(@RequestBody ConsumerCreateRequestBody consumerCreateRequestBody) {
         log.trace(consumerCreateRequestBody.toString());
 
-        // TODO Check if the user is an admin.
-        // TODO Check if password matches.
+        UserDto userDto = loginService.login(
+                consumerCreateRequestBody.getUsername(), consumerCreateRequestBody.getPassword());
+        if(userDto == null || !userDto.isAdmin()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
         consumerService.generate(
                 consumerCreateRequestBody.getRealm(),

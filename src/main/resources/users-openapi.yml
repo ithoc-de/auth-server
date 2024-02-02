@@ -47,6 +47,8 @@ components:
           type: string
         password:
           type: string
+        admin:
+          type: boolean
     UserResponseBody:
       type: object
       properties:
